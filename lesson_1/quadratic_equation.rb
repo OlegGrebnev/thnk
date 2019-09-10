@@ -1,18 +1,21 @@
 puts "Введите коэффициенты квадратного уравнения ax**2 + bx + c = 0"
-arr = Array.new
 print "a: "
-arr[0] = gets.chomp.to_f
+a = gets.chomp.to_f
 print "b: "
-arr[1] = gets.chomp.to_f
+b = gets.chomp.to_f
 print "c: "
-arr[2] = gets.chomp.to_f
+c = gets.chomp.to_f
 #вычисляем дискриминант
-discr = arr[1] ** 2 - 4 * arr[0] * arr[2]
+discr = b ** 2 - 4 * a * c
+sqrt_discr = Math.sqrt(discr)
 #вычисляем корни уравнения
 if discr > 0
-  puts "D = #{arr[1] ** 2 - 4 * arr[0] * arr[2]}, x1 = #{((-1)*arr[1] + Math.sqrt(discr)) / (2 * arr[0])}, x2 = #{(-arr[1] - Math.sqrt(discr)) / (2 * arr[0])}"
+  puts "D = #{discr}"
+  puts "x1 = #{((-1) * b + sqrt_discr) / (2 * a)}"
+  puts "x2 = #{((-1) * b - sqrt_discr) / (2 * a)}"
 elsif discr == 0
-  puts "D = #{arr[1] ** 2 - 4 * arr[0] * arr[2]}, x1 = x2 = #{(-1)*arr[1] / (2 * arr[0])}"
+  puts "D = #{discr}"
+  puts "x1 = x2 = #{(-1) * b / (2 * a)}"
 else
   puts "Корней нет"
 end

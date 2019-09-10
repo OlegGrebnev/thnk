@@ -1,11 +1,10 @@
 puts "Как вас зовут?"
-name = gets.chomp
-name.capitalize!
+name = gets.chomp.capitalize
 puts "Какой у вас рост (см.)?"
-body_growth = gets.chomp
+body_growth = gets.chomp.to_f
 
-if body_growth.to_f - 110.0 >= 0
-  puts "#{name}, ваш идеальный вес #{body_growth.to_f - 110}, кг."
+if body_growth - 110.0 >= 0
+  puts "#{name}, ваш идеальный вес #{body_growth - 110}, кг."
 else
 =begin
 Тут не понятно условие задачи. Как мы можем утверждать об оптимальности веса, если рост

@@ -1,6 +1,6 @@
 puts "Введите значение основания треугольника, м"
-a = gets.chomp
+a = gets.chomp.to_f
 puts "Введите значение высоты треугольника, м"
-h = gets.chomp
+h = gets.chomp.to_f
 
-puts "S = #{0.5 * a.to_f * h.to_f}, м.кв."
+puts "S = #{0.5 * a * h}, м.кв."
