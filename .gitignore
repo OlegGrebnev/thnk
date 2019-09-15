@@ -1,3 +1,5 @@
+.DS_Store
+
 .idea/
 
 .DS_Store/
@@ -9,4 +11,3 @@ lesson_1/.DS_Store/.DS_Store
 lesson_2/.idea/
 
 lesson_2/.DS_Store/.DS_Store
-.DS_Store
