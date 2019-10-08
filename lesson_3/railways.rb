@@ -5,7 +5,7 @@ class Station
     @station_name = station_name
     @trains = []
   end
-  def arrived(train)
+  def arrive(train)
     @trains << train
   end
   def departure(train)
@@ -49,13 +49,13 @@ class Train
     @train_route = route
 #Перемещение на первую станцию в маршруте
     station = route.stations.first
-    station.arrived(self)
+    station.arrive(self)
     @current_station = station
   end
   def go_to_station(station)
     if [next_station, prev_station].include?(station)
       @current_station.departure(self)
-      station.arrived(self)
+      station.arrive(self)
       @current_station = station
     end
   end
