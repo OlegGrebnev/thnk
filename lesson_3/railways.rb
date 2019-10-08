@@ -46,11 +46,11 @@ class Train
     @speed = 0
   end
 
-  def add_train_car
+  def add_car
     @car += 1 if @speed == 0
   end
 
-  def delete_train_car
+  def delete_car
     @car -= 1 if @speed == 0 && @car > 0
   end
 
@@ -91,10 +91,10 @@ end
 
 train1 = Train.new(123, "cargo", 56)
 puts train1.speed = 1
-puts train1.add_train_car
+puts train1.add_car
 puts train1.train_stop
-train1.add_train_car
-train1.delete_train_car
+train1.add_car
+train1.delete_car
 
 station1 = Station.new("SPB")
 station2 = Station.new("MSK")
@@ -112,13 +112,6 @@ route1.add_station(station3)
 route2 = Route.new(station4, station1)
 route2.add_station(station2)
 route2.add_station(station3)
-
-
-#route1.add_station("BLG")
-
-#route2.add_station("BLG")
-
-#route1.show_route
 
 train1.get_route(route2)
 train1.go_to_station(station2)
