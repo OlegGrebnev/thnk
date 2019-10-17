@@ -24,7 +24,7 @@ class Station
 
   def show_trains
     if trains.empty?
-      puts "there are no trains at thestation"
+      puts "there are no trains at the station"
       return
     end
     puts "trains by type: "

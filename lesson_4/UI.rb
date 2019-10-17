@@ -5,6 +5,29 @@ class UserInterface
     @routes = []
   end
 
+  def menu
+    [
+        '[1] create station',
+        '[2] show station and trains',
+        '[3] create train',
+        '[4] create route',
+        '[5] manage route',
+        '[6] manage trains',
+        '[7] show trains and cars',
+        '[0] exit'
+    ]
+  end
+
+  def show_option(title, menu)
+    puts title
+    menu.each { |option| puts option }
+  end
+
+  def select_option
+    print "select option: "
+    gets.chomp.to_i
+  end
+
   def choose_option
     loop do
       show_option('menu', menu)
@@ -24,32 +47,10 @@ class UserInterface
         manage_route
       when 6
         manage_train
+      when 7
+        show_trains_and_cars
       end
     end
-  end
-
-  private
-
-  def menu
-    [
-        '[1] create station',
-        '[2] show station and trains',
-        '[3] create train',
-        '[4] create route',
-        '[5] manage route',
-        '[6] manage trains',
-        '[0] exit'
-    ]
-  end
-
-  def show_option(title, menu)
-    puts title
-    menu.each { |option| puts option }
-  end
-
-  def select_option
-    print "select option: "
-    gets.chomp.to_i
   end
 
   def create_station
@@ -138,9 +139,9 @@ class UserInterface
 
   def train_add_car(train)
     car_type = case train.type
-               when 'passenger' then
+               when :passenger then
                  PassengerCar
-               when 'cargo' then
+               when :cargo then
                  CargoCar
                end
     train.add_car(car_type.new)
@@ -157,7 +158,7 @@ class UserInterface
     when 1 then
       train.get_route(choiced_route)
     when 2 then
-      train.train_add_car
+      train_add_car(train)
     when 3 then
       train.delete_car
     when 4 then
@@ -171,6 +172,12 @@ class UserInterface
     @stations.each do |station|
       print station.name + ' - '
       station.show_trains
+    end
+  end
+
+  def show_trains_and_cars
+    @trains.each do |train|
+      puts "the [#{train.type}] train # #{train.number} count of cars: #{train.show_cars}"
     end
   end
 end

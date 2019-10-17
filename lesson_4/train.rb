@@ -1,12 +1,12 @@
 class Train
-  attr_reader :type, :number, :car, :route, :station
+  attr_reader :type, :number, :cars, :route, :station
   attr_accessor :speed
 
   def initialize(number, type)
     @number = number
     @type = type
     @speed = 0
-    @car = []
+    @cars = []
   end
 
   def train_stop?
@@ -14,11 +14,11 @@ class Train
   end
 
   def add_car(car)
-    @car << car if train_stop?
+    @cars << car if train_stop?
   end
 
   def delete_car
-    @car.pop if train_stop? && !@car.empty?
+    @cars.pop if train_stop? && !@cars.empty?
   end
 
   def get_route(route)
@@ -35,6 +35,14 @@ class Train
 
   def go_to_prev_station
     go_to_station(prev_station)
+  end
+
+  def show_cars
+    if @cars.empty?
+      puts "there are no train cars"
+    else
+      @cars.length
+    end
   end
 
   private
