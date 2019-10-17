@@ -19,7 +19,7 @@ class Station
   end
 
   def departure(train)
-    @trains.delete(train)
+    trains[train.type].delete(train)
   end
 
   def show_trains

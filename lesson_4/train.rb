@@ -21,6 +21,14 @@ class Train
     @cars.pop if train_stop? && !@cars.empty?
   end
 
+  def show_cars
+    if @cars.empty?
+      puts "there are no train cars"
+    else
+      @cars.length
+    end
+  end
+
   def get_route(route)
     @route = route
     #Перемещение на первую станцию в маршруте
@@ -37,25 +45,6 @@ class Train
     go_to_station(prev_station)
   end
 
-  def show_cars
-    if @cars.empty?
-      puts "there are no train cars"
-    else
-      @cars.length
-    end
-  end
-
-  private
-
-  #эти методы используются только для публичного интерфейса класса Train
-  def go_to_station(station)
-    if [next_station, prev_station].include?(station)
-      @current_station.departure(self)
-      station.arrive(self)
-      @current_station = station
-    end
-  end
-
   def next_station
     current_station_idx = @route.stations.index(@current_station)
     @route.stations[current_station_idx + 1] if current_station_idx < @route.stations.length - 1
@@ -64,5 +53,16 @@ class Train
   def prev_station
     current_station_idx = @route.stations.index(@current_station)
     @route.stations[current_station_idx - 1] if current_station_idx > 0
+  end
+
+  private
+
+  #эти методы используются только для публичного интерфейса класса Train
+  def go_to_station(station)
+    if [next_station, prev_station].include?(station)
+      @current_station.departure(self)
+      station.get_train(self)
+      @current_station = station
+    end
   end
 end
