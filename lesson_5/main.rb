@@ -1,5 +1,5 @@
-require_relative 'made_by'
 require_relative 'instance_counter'
+require_relative 'made_by'
 
 require_relative 'station'
 

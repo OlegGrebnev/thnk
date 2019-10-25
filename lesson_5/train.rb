@@ -1,9 +1,9 @@
 class Train
-  include MadeBy
-  include InstanceCounter
-
   attr_reader :type, :number, :cars, :route, :station
   attr_accessor :speed
+
+  include MadeBy
+  include InstanceCounter
 
   @@trains = {}
 
@@ -17,6 +17,7 @@ class Train
     @speed = 0
     @cars = []
     @@trains[number] = self
+    register_instance
   end
 
   def train_stop?
