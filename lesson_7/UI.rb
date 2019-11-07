@@ -38,7 +38,7 @@ class UserInterface
       when 1
         create_station
       when 2
-        show_station_and_trains
+        show_stations
       when 3
         create_train
       when 4
@@ -51,6 +51,34 @@ class UserInterface
         show_trains_and_cars
       end
     end
+  end
+
+  def seed
+    moscow = Station.new('MSK')
+    sant_petersburg = Station.new('SPB')
+    bologoe = Station.new('BLG')
+    @stations = [moscow, sant_petersburg, bologoe]
+
+    msk_spb = Route.new(moscow, sant_petersburg)
+    spb_blg = Route.new(sant_petersburg, bologoe)
+    @routes = [msk_spb, spb_blg]
+
+    ptrain = PassengerTrain.new('125-PA')
+    ctrain = CargoTrain.new('900-CA')
+    @trains = [ptrain, ctrain]
+
+    pcar = PassengerCar.new(36)
+    pcar.occupancy
+
+    ccar = CargoCar.new(480)
+    ccar.occupancy(380)
+
+    ptrain.add_car(pcar)
+    ptrain.add_car(PassengerCar.new(72))
+    ctrain.add_car(ccar)
+
+    ptrain.get_route(msk_spb)
+    ctrain.get_route(spb_blg)
   end
 
   def create_station
@@ -139,10 +167,9 @@ class UserInterface
   def train_menu
     [
         '[1] set route',
-        '[2] add car',
-        '[3] remove car',
-        '[4] move next station',
-        '[5] move previous station'
+        '[2] manage cars',
+        '[3] move next station',
+        '[4] move previous station'
     ]
   end
 
@@ -157,7 +184,9 @@ class UserInterface
                when :cargo then
                  CargoCar
                end
-    train.add_car(car_type.new)
+    puts 'enter car capacity'
+    capacity = gets.chomp.to_i
+    train.add_car(car_type.new(capacity))
   end
 
   def manage_train
@@ -171,20 +200,81 @@ class UserInterface
     when 1 then
       train.get_route(choiced_route)
     when 2 then
-      train_add_car(train)
+      manage_cars(train)
     when 3 then
-      train.delete_car
-    when 4 then
       train.go_to_next_station
-    when 5 then
+    when 4 then
       train.go_to_prev_station
     end
   end
 
-  def show_station_and_trains
+  def choiced_car(cars)
+    choiced_entity('choice car', cars, :number)
+  end
+
+  def car_menu
+    [
+        '[1] add car',
+        '[2] remove car',
+        '[3] occupy',
+        '[4] show cars'
+    ]
+  end
+
+  def manage_cars(train)
+    show_option('manage cars', car_menu)
+    case select_option
+    when 1 then
+      train_add_car(train)
+    when 2 then
+      train.delete_car
+    when 3 then
+      occupancy(train)
+    when 4 then
+      show_cars(train)
+    end
+  end
+
+  def occupancy(train)
+    car = choiced_car(train.cars)
+
+    case train.type
+    when :passenger
+    then
+      car.occupancy
+    when :cargo
+    then
+      puts 'enter cargo occupancy amount'
+      amount = gets.chomp.to_i
+      car.occupancy(amount)
+    end
+  end
+
+  def show_cars(train)
+    if train.cars.empty?
+      puts "there are no train cars"
+    else
+      #puts "#:#{train.number}[#{train.type}]:"
+      train.each_car do |car|
+        puts "#:#{car.number}, capacity:#{car.capacity}, available capacity:#{car.available_capacity}"
+      end
+    end
+  end
+
+  def show_trains(station)
+    if station.trains.empty?
+      puts 'There are no trains on the station'
+    end
+    station.each_train do |train|
+      puts "number: #{train.number}, type: #{train.type}, cars: #{train.cars.length}"
+      puts show_cars(train)
+    end
+  end
+
+  def show_stations
     @stations.each do |station|
       print station.name + ' - '
-      station.show_trains
+      show_trains(station)
     end
   end
 
