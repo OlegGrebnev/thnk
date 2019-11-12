@@ -1,0 +1,25 @@
+Metrics/LineLength:
+  Max: 100
+Style/Documentation:
+  Enabled: false
+
+Style/ClassVars:
+  Exclude:
+    - './station.rb'
+    - './train.rb'
+
+Metrics/ClassLength:
+  Exclude:
+    - './user_interface.rb'
+
+Metrics/MethodLength:
+  Exclude:
+    - './user_interface.rb'
+
+Metrics/CyclomaticComplexity:
+  Exclude:
+    - './user_interface.rb'
+
+Metrics/AbcSize:
+  Exclude:
+    - './user_interface.rb'
